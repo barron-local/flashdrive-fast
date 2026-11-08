@@ -31,3 +31,8 @@ c:\Users\Woradech\Desktop\flashdrive-fast\target\release\flashdrive-fast.exe
   ```powershell
   .\target\release\flashdrive-fast.exe
   ```
+
+---
+
+## 📄 License
+This project is licensed under the [MIT License](LICENSE).
