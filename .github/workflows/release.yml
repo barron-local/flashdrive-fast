@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build release binary
+        run: cargo build --release --bin flashdrive-fast
+
+      - name: Package Windows Binary
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "target\release\flashdrive-fast.exe", "README.md" -DestinationPath "flashdrive-fast-windows-x64.zip"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            flashdrive-fast-windows-x64.zip
+            target/release/flashdrive-fast.exe
+          generate_release_notes: true
